@@ -1,0 +1,25 @@
+# Java 17 (Render compatible)
+FROM eclipse-temurin:17-jdk
+
+# App directory
+WORKDIR /app
+
+# Maven wrapper & pom copy (dependency cache ke liye)
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+
+# Dependencies download
+RUN chmod +x mvnw && ./mvnw dependency:go-offline
+
+# Source code copy
+COPY src src
+
+# Build jar
+RUN ./mvnw clean package -DskipTests
+
+# Expose port
+EXPOSE 8080
+
+# Run app
+ENTRYPOINT ["java","-jar","target/*.jar"]
