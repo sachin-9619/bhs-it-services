@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import com.company.model.ContactMessage;
 import com.company.service.ContactService;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://bhs-it.netlify.app"
+})
 @RestController
 @RequestMapping("/api/contact")
 public class ContactController {
